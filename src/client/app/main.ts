@@ -1,11 +1,12 @@
-import { APP_BASE_HREF } from '@angular/common';
+import { bootstrap } from '@angular/platform-browser-dynamic';
 import { disableDeprecatedForms, provideForms } from '@angular/forms';
 import { enableProdMode } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { APP_BASE_HREF } from '@angular/common';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 import { APP_ROUTER_PROVIDERS } from './app.routes';
 import { AppComponent } from './app.component';
-import { AUTH_PROVIDERS } from './shared/index';
+import { AUTH_PROVIDERS, AuthService, CanActivateAuthGuard } from './shared/index';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 
@@ -16,12 +17,16 @@ if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 bootstrap(AppComponent, [
   disableDeprecatedForms(),
   provideForms(),
-  APP_ROUTER_PROVIDERS,
-  AUTH_PROVIDERS,
+  HTTP_PROVIDERS,
   {
     provide: APP_BASE_HREF,
     useValue: '<%= APP_BASE %>'
-  }
+  },
+
+  AuthService,
+  CanActivateAuthGuard,
+  APP_ROUTER_PROVIDERS,
+  AUTH_PROVIDERS
 ]);
 
 // In order to start the Service Worker located at "./worker.js"

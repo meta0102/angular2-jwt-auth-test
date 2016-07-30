@@ -1,23 +1,17 @@
-import {provide} from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
-import {AuthHttp, AuthConfig} from './index';
+import { provide } from '@angular/core';
+import { Http, RequestOptions } from '@angular/http';
+import { AuthConfig } from './index';
 
-export const AUTH_PROVIDERS: any = [
-  provide(AuthHttp, {
-    useFactory: (http: Http, options: RequestOptions) => {
-      return new AuthHttp(new AuthConfig(), http, options);
-    },
-    deps: [Http, RequestOptions]
-  })
+// Export AuthHttp provider with default settings
+export const AUTH_PROVIDERS: any = [  
+  provideAuthConfig()
 ];
 
-export function provideAuth(config = {}): any[] {
-  return [
-    provide(AuthHttp, {
-      useFactory: (http: Http, options: RequestOptions) => {
-        return new AuthHttp(new AuthConfig(config), http, options);
-      },
-      deps: [Http, RequestOptions]
-    })
-  ];
+// Provide AuthConfig with default or specified settings.
+export function provideAuthConfig(config = {}): any {
+  return provide(AuthConfig, {
+    useFactory: () => {
+      return new AuthConfig(config);
+    }
+  });
 }

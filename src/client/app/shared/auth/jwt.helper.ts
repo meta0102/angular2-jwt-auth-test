@@ -2,7 +2,6 @@
 declare var escape: any;
 
 export class JwtHelper {
-
   public urlBase64Decode(str: string) {
     var output = str.replace(/-/g, '+').replace(/_/g, '/');
     switch (output.length % 4) {

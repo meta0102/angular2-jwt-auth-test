@@ -1,3 +1,5 @@
+import {Injectable} from '@angular/core';
+
 export interface IAuthConfig {
   headerName: string;
   headerPrefix: string;
@@ -8,6 +10,11 @@ export interface IAuthConfig {
   noTokenScheme?: boolean;
 }
 
+/* If you wish to override the default AuthConfig settings, the easiest
+   way to do so is to set the desired values in the relevant method
+   in auth.providers.ts
+*/
+@Injectable()
 export class AuthConfig {
   headerName: string;
   headerPrefix: string;
